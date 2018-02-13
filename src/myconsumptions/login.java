@@ -49,6 +49,7 @@ public class login extends javax.swing.JFrame {
         txt_password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("MyConcumptions - Login");
 
         jLabel1.setText("Username");
 
@@ -169,8 +170,6 @@ public class login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "DB Error!");
             }
         }
-                
-                
         
     }//GEN-LAST:event_btn_connectActionPerformed
 

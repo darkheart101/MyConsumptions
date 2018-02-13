@@ -151,7 +151,10 @@ public class AddBookForm extends javax.swing.JFrame {
        finally {
             try{                
                 pst.close();
-                clearAll();
+                //clearAll();
+                Books bp = new Books();
+                bp.setVisible(true);
+                this.dispose();
             }
             catch(Exception e){
                 JOptionPane.showMessageDialog(null,e);
