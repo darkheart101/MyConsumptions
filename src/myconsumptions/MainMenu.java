@@ -21,7 +21,8 @@ public class MainMenu extends javax.swing.JFrame {
         initComponents();
         Toolkit toolkit = getToolkit();
         Dimension size  = toolkit.getScreenSize();
-        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);           
+        //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
+        setLocation(500, size.height/2 - getHeight()/2);             
     }
 
     /**
@@ -34,14 +35,34 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         btn_OpenBooksConsumptions = new javax.swing.JButton();
+        btn_OpenBooksConsumptions1 = new javax.swing.JButton();
+        btn_OpenBooksConsumptions2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consumption Menu");
+        setPreferredSize(new java.awt.Dimension(487, 387));
 
+        btn_OpenBooksConsumptions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myconsumptions/images/books-stack-of-three.png"))); // NOI18N
         btn_OpenBooksConsumptions.setText("Book Consumption");
         btn_OpenBooksConsumptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_OpenBooksConsumptionsActionPerformed(evt);
+            }
+        });
+
+        btn_OpenBooksConsumptions1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myconsumptions/images/clapperboard.png"))); // NOI18N
+        btn_OpenBooksConsumptions1.setText("Movie Consumption");
+        btn_OpenBooksConsumptions1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_OpenBooksConsumptions1ActionPerformed(evt);
+            }
+        });
+
+        btn_OpenBooksConsumptions2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myconsumptions/images/television.png"))); // NOI18N
+        btn_OpenBooksConsumptions2.setText("TV Show Consumption");
+        btn_OpenBooksConsumptions2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_OpenBooksConsumptions2ActionPerformed(evt);
             }
         });
 
@@ -50,16 +71,23 @@ public class MainMenu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(btn_OpenBooksConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addGap(127, 127, 127)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_OpenBooksConsumptions2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_OpenBooksConsumptions1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_OpenBooksConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(btn_OpenBooksConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addGap(63, 63, 63)
+                .addComponent(btn_OpenBooksConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_OpenBooksConsumptions1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_OpenBooksConsumptions2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         pack();
@@ -71,6 +99,14 @@ public class MainMenu extends javax.swing.JFrame {
         bp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_OpenBooksConsumptionsActionPerformed
+
+    private void btn_OpenBooksConsumptions1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBooksConsumptions1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_OpenBooksConsumptions1ActionPerformed
+
+    private void btn_OpenBooksConsumptions2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBooksConsumptions2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_OpenBooksConsumptions2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,5 +145,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_OpenBooksConsumptions;
+    private javax.swing.JButton btn_OpenBooksConsumptions1;
+    private javax.swing.JButton btn_OpenBooksConsumptions2;
     // End of variables declaration//GEN-END:variables
 }

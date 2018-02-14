@@ -29,8 +29,10 @@ public class AddBookForm extends javax.swing.JFrame {
         conn = db.java_db();
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
-        setLocation(size.width/2 - getWidth()/2, 
-        size.height/2 - getHeight()/2);           
+//        setLocation(size.width/2 - getWidth()/2, 
+//        size.height/2 - getHeight()/2);           
+        //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
+        setLocation(500, size.height/2 - getHeight()/2);   
     }
 
     /**

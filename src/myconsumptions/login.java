@@ -28,7 +28,8 @@ public class login extends javax.swing.JFrame {
         initComponents();
         Toolkit toolkit = getToolkit();
         Dimension size  = toolkit.getScreenSize();
-        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
+        //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
+        setLocation(500, size.height/2 - getHeight()/2);      
         conn = db.java_db();
     }
 

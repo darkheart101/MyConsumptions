@@ -28,8 +28,11 @@ public class Books extends javax.swing.JFrame {
         initComponents();
         Toolkit toolkit = getToolkit();
         Dimension size  = toolkit.getScreenSize();
-        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);           
+        //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
+        setLocation(500, size.height/2 - getHeight()/2);             
         conn = db.java_db();
+        this.loadList();      
+        
     }
 
     /**
@@ -160,6 +163,23 @@ public class Books extends javax.swing.JFrame {
 
     private void btn_loadBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadBooksActionPerformed
         // TODO add your handling code here:
+        this.loadList();       
+    }//GEN-LAST:event_btn_loadBooksActionPerformed
+
+    private void btn_OpenBookFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBookFormActionPerformed
+        // TODO add your handling code here:
+        AddBookForm adf = new AddBookForm();
+        adf.setVisible(true);
+        this.dispose();
+                
+    }//GEN-LAST:event_btn_OpenBookFormActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    //Load List function
+    private void loadList() {                                         
         String sql = "SELECT BookID AS 'Book ID', BookTitle AS 'Book Title', BookStartingDate AS 'Date Started', BookEndingDate AS 'Date Ended' FROM Books";
 
         try{
@@ -180,21 +200,9 @@ public class Books extends javax.swing.JFrame {
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "DB Error!");
             }
-        }        
-    }//GEN-LAST:event_btn_loadBooksActionPerformed
-
-    private void btn_OpenBookFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBookFormActionPerformed
-        // TODO add your handling code here:
-        AddBookForm adf = new AddBookForm();
-        adf.setVisible(true);
-        this.dispose();
-                
-    }//GEN-LAST:event_btn_OpenBookFormActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+        }
+    }
+    
     private void btn_OkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OkActionPerformed
         // TODO add your handling code here:
         MainMenu mm = new MainMenu();
