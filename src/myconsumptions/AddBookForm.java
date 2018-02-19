@@ -8,7 +8,11 @@ package myconsumptions;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -24,7 +28,7 @@ public class AddBookForm extends javax.swing.JFrame {
     /**
      * Creates new form AddBookForm
      */
-    public AddBookForm() {
+    public AddBookForm( ) {
         initComponents();
         conn = db.java_db();
         Toolkit toolkit = getToolkit();
@@ -198,10 +202,28 @@ public class AddBookForm extends javax.swing.JFrame {
             }
         });
     }
+    // Clear All function
     public void clearAll(){
         txt_bookTitle.setText("");
         cal_dateBookStarted.setDate(null);
         cal_dateBookEnded.setDate(null);
+    }
+    
+    public void loadRecordToForm(Map data) throws ParseException{
+        
+        txt_bookTitle.setText( (String)data.get("BookTitle") );
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("Y-m-d");
+        String dateInString = (String)data.get("BookStartingDate");
+        System.out.println(dateInString);
+        
+        java.util.Date BookStrtingDate = sdf.parse(dateInString);
+        System.out.println("\n");
+        System.out.println(BookStrtingDate);
+        
+        cal_dateBookStarted.setDate(BookStrtingDate);
+        
+        //txt_bookTitle.setText(data);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

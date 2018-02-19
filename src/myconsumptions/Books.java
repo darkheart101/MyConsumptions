@@ -10,6 +10,8 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -176,8 +178,76 @@ public class Books extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        int selRow = 0;
+        int bookID = 0;
+        
+
+        selRow = tbl_books.getSelectedRow();
+        bookID = (int)tbl_books.getValueAt(selRow, 0);
+        
+        this.loadRecord(bookID);
+        //System.out.println(bookID);
+       
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+ 
+    //Load Record function
+    private void loadRecord(int bookID ) {    
+        if(bookID < 0){
+            JOptionPane.showMessageDialog(null, "No book is Selected!");
+        }
+        String sql = "SELECT BookID AS 'Book ID', BookTitle AS 'Book Title', BookStartingDate AS 'Date Started', BookEndingDate AS 'Date Ended' FROM Books WHERE BookID = ?";
+        
+        String BookTitle = "";
+        String BookStartingDate = "";
+        String BookEndingDate = "";
+        
+        try{
+
+            pst = conn.prepareStatement(sql);    
+            pst.setInt(1, bookID);
+            rs = pst.executeQuery();
+            //rs.getString(1);
+            BookTitle = rs.getString(2);
+            BookStartingDate = rs.getString(3);
+            BookEndingDate = rs.getString(4);
+            
+            
+            AddBookForm adf = new AddBookForm();
+            
+            adf.setVisible(true);
+            
+            Map<String, String> mymap = new HashMap<String, String>();
+            mymap.put("BookID", Integer.toString(bookID) );
+            mymap.put("BookTitle", BookTitle); 
+            mymap.put("BookStartingDate", BookStartingDate);
+            mymap.put("BookEndingDate", BookEndingDate);
+            
+            adf.loadRecordToForm(mymap);
+            //txt_bookTitle
+
+            //System.out.println(rs.getString(3));
+            //System.out.println(rs.getString(4));
+            
+            //tbl_books.setModel(DbUtils.resultSetToTableModel(rs));
+            
+            this.dispose();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        finally{
+            try{
+                rs.close();
+                pst.close();
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "DB Error!");
+            }
+        }
+        
+        
+        
+    }   
     //Load List function
     private void loadList() {                                         
         String sql = "SELECT BookID AS 'Book ID', BookTitle AS 'Book Title', BookStartingDate AS 'Date Started', BookEndingDate AS 'Date Ended' FROM Books";
