@@ -6,10 +6,12 @@
 package myconsumptions;
 
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -186,7 +188,39 @@ public class AddBookForm extends javax.swing.JFrame {
         cal_dateBookStarted.setDate(null);
         cal_dateBookEnded.setDate(null);
     }
-    
+    public static void delete_BookRecord(int bookID){
+        if(bookID <=0){
+            JOptionPane.showMessageDialog(null,"No Valid Record Selected");
+        }
+        int BookID = bookID;
+        Connection conn = db.java_db();  
+        
+        System.out.println(conn);
+                
+        try {
+            String sql ="DELETE FROM Books WHERE BookID = ?";
+            
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1,Integer.toString(BookID));
+                pst.execute();
+                JOptionPane.showMessageDialog(null,"Data deleted successfully");
+            }
+
+       }
+       catch (SQLException | HeadlessException e){
+          
+           JOptionPane.showMessageDialog(null,e);
+       }
+       finally {
+            try{                
+               
+                
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null,e);
+            }            
+        }
+    }
     //update book record
     public void update_BookRecord(){
         if(this.editRecID <= 0){

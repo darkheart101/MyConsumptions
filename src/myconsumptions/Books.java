@@ -52,7 +52,7 @@ public class Books extends javax.swing.JFrame {
         btn_Ok = new javax.swing.JButton();
         btn_OpenBookForm = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btn_deleteBook = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Books");
@@ -115,7 +115,12 @@ public class Books extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Delete");
+        btn_deleteBook.setText("Delete");
+        btn_deleteBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,7 +145,7 @@ public class Books extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
+                                .addComponent(btn_deleteBook)
                                 .addGap(12, 12, 12))))))
         );
         layout.setVerticalGroup(
@@ -150,7 +155,7 @@ public class Books extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_OpenBookForm)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btn_deleteBook))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -278,6 +283,19 @@ public class Books extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_OkActionPerformed
 
+    private void btn_deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteBookActionPerformed
+        // TODO add your handling code here:
+        int selRow = 0;
+        int bookID = 0;
+        
+
+        selRow = tbl_books.getSelectedRow();
+        bookID = (int)tbl_books.getValueAt(selRow, 0);
+        
+        AddBookForm.delete_BookRecord(bookID);
+        this.loadList();
+    }//GEN-LAST:event_btn_deleteBookActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -316,9 +334,9 @@ public class Books extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Ok;
     private javax.swing.JButton btn_OpenBookForm;
+    private javax.swing.JButton btn_deleteBook;
     private javax.swing.JButton btn_loadBooks;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbl_books;
     // End of variables declaration//GEN-END:variables
