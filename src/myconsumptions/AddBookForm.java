@@ -24,6 +24,7 @@ public class AddBookForm extends javax.swing.JFrame {
     
     Connection conn = null;    
     PreparedStatement pst = null;
+    int editRecID = 0;
     
     /**
      * Creates new form AddBookForm
@@ -137,35 +138,11 @@ public class AddBookForm extends javax.swing.JFrame {
 
     private void btn_saveBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveBookActionPerformed
         // TODO add your handling code here:
-        try {
-            String sql ="insert into Books " 
-                        + "(BookTitle, BookStartingDate,BookEndingDate) "
-                        + "values (?,?,?)";
-            
-            pst = conn.prepareStatement(sql);
-            pst.setString(1,txt_bookTitle.getText());
-            pst.setString(2,((JTextField)cal_dateBookStarted.getDateEditor().getUiComponent()).getText());
-            pst.setString(3,((JTextField)cal_dateBookEnded.getDateEditor().getUiComponent()).getText() );            
-            
-            pst.execute();
-            JOptionPane.showMessageDialog(null,"Data is saved successfully");
-
-       }
-       catch (Exception e){
-           JOptionPane.showMessageDialog(null,e);
-       }
-       finally {
-            try{                
-                pst.close();
-                //clearAll();
-                Books bp = new Books();
-                bp.setVisible(true);
-                this.dispose();
-            }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(null,e);
-            }            
-        }        
+        if(this.editRecID > 0){
+            this.update_BookRecord();
+        }else{
+            this.insert_new_BookRecord();
+        }
     }//GEN-LAST:event_btn_saveBookActionPerformed
 
     /**
@@ -204,26 +181,102 @@ public class AddBookForm extends javax.swing.JFrame {
     }
     // Clear All function
     public void clearAll(){
+        
         txt_bookTitle.setText("");
         cal_dateBookStarted.setDate(null);
         cal_dateBookEnded.setDate(null);
     }
     
+    //update book record
+    public void update_BookRecord(){
+        if(this.editRecID <= 0){
+            JOptionPane.showMessageDialog(null,"No Valid Record Selected");
+        }
+        int BookID = this.editRecID;        
+        
+        try {
+            String sql ="UPDATE Books SET " 
+                        + "BookTitle = ?"
+                        + ",BookStartingDate = ?"
+                        + ",BookEndingDate = ?"
+                        +"WHERE BookID = ?";
+            
+            pst = conn.prepareStatement(sql);
+            pst.setString(1,txt_bookTitle.getText());
+            pst.setString(2,((JTextField)cal_dateBookStarted.getDateEditor().getUiComponent()).getText());
+            pst.setString(3,((JTextField)cal_dateBookEnded.getDateEditor().getUiComponent()).getText() );
+            pst.setString(4,Integer.toString(BookID));
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data is saved successfully");
+
+       }
+       catch (Exception e){
+           JOptionPane.showMessageDialog(null,e);
+       }
+       finally {
+            try{                
+                pst.close();
+                //clearAll();
+                Books bp = new Books();
+                bp.setVisible(true);
+                this.dispose();
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null,e);
+            }            
+        }         
+        
+    }
+    
+    // Insert new book Record
+    public void insert_new_BookRecord(){
+        try {
+            String sql ="insert into Books " 
+                        + "(BookTitle, BookStartingDate,BookEndingDate) "
+                        + "values (?,?,?)";
+            
+            pst = conn.prepareStatement(sql);
+            pst.setString(1,txt_bookTitle.getText());
+            pst.setString(2,((JTextField)cal_dateBookStarted.getDateEditor().getUiComponent()).getText());
+            pst.setString(3,((JTextField)cal_dateBookEnded.getDateEditor().getUiComponent()).getText() );            
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data is saved successfully");
+
+       }
+       catch (Exception e){
+           JOptionPane.showMessageDialog(null,e);
+       }
+       finally {
+            try{                
+                pst.close();
+                //clearAll();
+                Books bp = new Books();
+                bp.setVisible(true);
+                this.dispose();
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null,e);
+            }            
+        }         
+    }
+    
     public void loadRecordToForm(Map data) throws ParseException{
         
         txt_bookTitle.setText( (String)data.get("BookTitle") );
+        String dateStartInString = (String)data.get("BookStartingDate");
         
-        SimpleDateFormat sdf = new SimpleDateFormat("Y-m-d");
-        String dateInString = (String)data.get("BookStartingDate");
-        System.out.println(dateInString);
+        String dateEndInString = (String)data.get("BookEndingDate");
         
-        java.util.Date BookStrtingDate = sdf.parse(dateInString);
-        System.out.println("\n");
-        System.out.println(BookStrtingDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         
-        cal_dateBookStarted.setDate(BookStrtingDate);
-        
-        //txt_bookTitle.setText(data);
+        java.util.Date BookStartingDate = sdf.parse(dateStartInString);
+        java.util.Date BookEndingDate = sdf.parse(dateEndInString);
+
+
+        cal_dateBookStarted.setDate(BookStartingDate);
+        cal_dateBookEnded.setDate(BookEndingDate);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

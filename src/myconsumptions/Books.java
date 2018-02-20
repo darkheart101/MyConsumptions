@@ -171,6 +171,7 @@ public class Books extends javax.swing.JFrame {
     private void btn_OpenBookFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBookFormActionPerformed
         // TODO add your handling code here:
         AddBookForm adf = new AddBookForm();
+        adf.editRecID = 0;
         adf.setVisible(true);
         this.dispose();
                 
@@ -192,9 +193,11 @@ public class Books extends javax.swing.JFrame {
  
     //Load Record function
     private void loadRecord(int bookID ) {    
+        
         if(bookID < 0){
             JOptionPane.showMessageDialog(null, "No book is Selected!");
         }
+        
         String sql = "SELECT BookID AS 'Book ID', BookTitle AS 'Book Title', BookStartingDate AS 'Date Started', BookEndingDate AS 'Date Ended' FROM Books WHERE BookID = ?";
         
         String BookTitle = "";
@@ -215,6 +218,7 @@ public class Books extends javax.swing.JFrame {
             AddBookForm adf = new AddBookForm();
             
             adf.setVisible(true);
+            adf.editRecID = bookID;
             
             Map<String, String> mymap = new HashMap<String, String>();
             mymap.put("BookID", Integer.toString(bookID) );
@@ -223,12 +227,6 @@ public class Books extends javax.swing.JFrame {
             mymap.put("BookEndingDate", BookEndingDate);
             
             adf.loadRecordToForm(mymap);
-            //txt_bookTitle
-
-            //System.out.println(rs.getString(3));
-            //System.out.println(rs.getString(4));
-            
-            //tbl_books.setModel(DbUtils.resultSetToTableModel(rs));
             
             this.dispose();
             
