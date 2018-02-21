@@ -44,6 +44,10 @@ public class Movies extends javax.swing.JFrame {
         btn_OpenMoviesForm = new javax.swing.JButton();
         btn_deleteMovie = new javax.swing.JButton();
         btn_editMovies = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_Movies = new javax.swing.JTable();
+        btn_loadMovies = new javax.swing.JButton();
+        btn_Ok = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Movies");
@@ -70,18 +74,74 @@ public class Movies extends javax.swing.JFrame {
             }
         });
 
+        tbl_Movies.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbl_Movies);
+
+        btn_loadMovies.setText("Load");
+        btn_loadMovies.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loadMoviesActionPerformed(evt);
+            }
+        });
+
+        btn_Ok.setText("OK");
+        btn_Ok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_OkActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(269, Short.MAX_VALUE)
-                .addComponent(btn_OpenMoviesForm)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_editMovies)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_deleteMovie)
-                .addGap(15, 15, 15))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btn_OpenMoviesForm)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_editMovies)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_deleteMovie)
+                                .addGap(15, 15, 15))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btn_loadMovies)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_Ok)
+                                .addGap(18, 18, 18))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +151,13 @@ public class Movies extends javax.swing.JFrame {
                     .addComponent(btn_OpenMoviesForm)
                     .addComponent(btn_deleteMovie)
                     .addComponent(btn_editMovies))
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_loadMovies)
+                    .addComponent(btn_Ok))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,6 +179,18 @@ public class Movies extends javax.swing.JFrame {
     private void btn_editMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editMoviesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_editMoviesActionPerformed
+
+    private void btn_loadMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadMoviesActionPerformed
+        // TODO add your handling code here:
+        this.loadList();
+    }//GEN-LAST:event_btn_loadMoviesActionPerformed
+
+    private void btn_OkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OkActionPerformed
+        // TODO add your handling code here:
+        MainMenu mm = new MainMenu();
+        mm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_OkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,8 +228,16 @@ public class Movies extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Ok;
     private javax.swing.JButton btn_OpenMoviesForm;
     private javax.swing.JButton btn_deleteMovie;
     private javax.swing.JButton btn_editMovies;
+    private javax.swing.JButton btn_loadMovies;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbl_Movies;
     // End of variables declaration//GEN-END:variables
+
+    private void loadList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
