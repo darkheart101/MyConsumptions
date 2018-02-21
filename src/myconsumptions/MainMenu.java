@@ -102,6 +102,9 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void btn_OpenBooksConsumptions1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBooksConsumptions1ActionPerformed
         // TODO add your handling code here:
+        Movies mv = new Movies();
+        mv.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_OpenBooksConsumptions1ActionPerformed
 
     private void btn_OpenBooksConsumptions2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBooksConsumptions2ActionPerformed

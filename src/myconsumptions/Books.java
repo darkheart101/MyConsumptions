@@ -13,6 +13,9 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -28,11 +31,21 @@ public class Books extends javax.swing.JFrame {
      */
     public Books() {
         initComponents();
+        
         Toolkit toolkit = getToolkit();
         Dimension size  = toolkit.getScreenSize();
         //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
         setLocation(500, size.height/2 - getHeight()/2);             
         conn = db.java_db();
+
+//        
+//        tbl_books.getColumnModel().getColumn(0).setPreferredWidth(10);                
+//        tbl_books.getColumnModel().getColumn(1).setWidth(10);
+//        tbl_books.getColumnModel().getColumn(1).setPreferredWidth(10);
+//        tbl_books.getColumnModel().getColumn(2).setPreferredWidth(10);
+//        tbl_books.getColumnModel().getColumn(3).setPreferredWidth(10);
+//
+        
         this.loadList();      
         
     }
@@ -51,7 +64,7 @@ public class Books extends javax.swing.JFrame {
         btn_loadBooks = new javax.swing.JButton();
         btn_Ok = new javax.swing.JButton();
         btn_OpenBookForm = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_editBook = new javax.swing.JButton();
         btn_deleteBook = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -59,6 +72,13 @@ public class Books extends javax.swing.JFrame {
 
         tbl_books.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -108,10 +128,10 @@ public class Books extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Edit");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_editBook.setText("Edit");
+        btn_editBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_editBookActionPerformed(evt);
             }
         });
 
@@ -143,7 +163,7 @@ public class Books extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btn_OpenBookForm)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2)
+                                .addComponent(btn_editBook)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_deleteBook)
                                 .addGap(12, 12, 12))))))
@@ -154,7 +174,7 @@ public class Books extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_OpenBookForm)
-                    .addComponent(jButton2)
+                    .addComponent(btn_editBook)
                     .addComponent(btn_deleteBook))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,7 +202,7 @@ public class Books extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_btn_OpenBookFormActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_editBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editBookActionPerformed
         // TODO add your handling code here:
         int selRow = 0;
         int bookID = 0;
@@ -194,7 +214,7 @@ public class Books extends javax.swing.JFrame {
         this.loadRecord(bookID);
         //System.out.println(bookID);
        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_editBookActionPerformed
  
     //Load Record function
     private void loadRecord(int bookID ) {    
@@ -253,7 +273,7 @@ public class Books extends javax.swing.JFrame {
     }   
     //Load List function
     private void loadList() {                                         
-        String sql = "SELECT BookID AS 'Book ID', BookTitle AS 'Book Title', BookStartingDate AS 'Date Started', BookEndingDate AS 'Date Ended' FROM Books";
+        String sql = "SELECT BookID AS 'Book ID', BookTitle AS 'Book Title', BookStartingDate AS 'Date Started', BookEndingDate AS 'Date Ended' FROM Books ORDER BY date(BookStartingDate) DESC";
 
         try{
 
@@ -335,8 +355,8 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JButton btn_Ok;
     private javax.swing.JButton btn_OpenBookForm;
     private javax.swing.JButton btn_deleteBook;
+    private javax.swing.JButton btn_editBook;
     private javax.swing.JButton btn_loadBooks;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbl_books;
     // End of variables declaration//GEN-END:variables
