@@ -35,12 +35,11 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         btn_OpenBooksConsumptions = new javax.swing.JButton();
-        btn_OpenBooksConsumptions1 = new javax.swing.JButton();
-        btn_OpenBooksConsumptions2 = new javax.swing.JButton();
+        btn_OpenMoviesConsumptions = new javax.swing.JButton();
+        btn_TVShowsConsumptions = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consumption Menu");
-        setPreferredSize(new java.awt.Dimension(487, 387));
 
         btn_OpenBooksConsumptions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myconsumptions/images/books-stack-of-three.png"))); // NOI18N
         btn_OpenBooksConsumptions.setText("Book Consumption");
@@ -50,19 +49,19 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        btn_OpenBooksConsumptions1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myconsumptions/images/clapperboard.png"))); // NOI18N
-        btn_OpenBooksConsumptions1.setText("Movie Consumption");
-        btn_OpenBooksConsumptions1.addActionListener(new java.awt.event.ActionListener() {
+        btn_OpenMoviesConsumptions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myconsumptions/images/clapperboard.png"))); // NOI18N
+        btn_OpenMoviesConsumptions.setText("Movie Consumption");
+        btn_OpenMoviesConsumptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_OpenBooksConsumptions1ActionPerformed(evt);
+                btn_OpenMoviesConsumptionsActionPerformed(evt);
             }
         });
 
-        btn_OpenBooksConsumptions2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myconsumptions/images/television.png"))); // NOI18N
-        btn_OpenBooksConsumptions2.setText("TV Show Consumption");
-        btn_OpenBooksConsumptions2.addActionListener(new java.awt.event.ActionListener() {
+        btn_TVShowsConsumptions.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myconsumptions/images/television.png"))); // NOI18N
+        btn_TVShowsConsumptions.setText("TV Show Consumption");
+        btn_TVShowsConsumptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_OpenBooksConsumptions2ActionPerformed(evt);
+                btn_TVShowsConsumptionsActionPerformed(evt);
             }
         });
 
@@ -73,8 +72,8 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(127, 127, 127)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_OpenBooksConsumptions2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_OpenBooksConsumptions1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_TVShowsConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_OpenMoviesConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_OpenBooksConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(142, Short.MAX_VALUE))
         );
@@ -84,9 +83,9 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGap(63, 63, 63)
                 .addComponent(btn_OpenBooksConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_OpenBooksConsumptions1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_OpenMoviesConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_OpenBooksConsumptions2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_TVShowsConsumptions, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(114, Short.MAX_VALUE))
         );
 
@@ -100,16 +99,19 @@ public class MainMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_OpenBooksConsumptionsActionPerformed
 
-    private void btn_OpenBooksConsumptions1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBooksConsumptions1ActionPerformed
+    private void btn_OpenMoviesConsumptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenMoviesConsumptionsActionPerformed
         // TODO add your handling code here:
         Movies mv = new Movies();
         mv.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btn_OpenBooksConsumptions1ActionPerformed
+    }//GEN-LAST:event_btn_OpenMoviesConsumptionsActionPerformed
 
-    private void btn_OpenBooksConsumptions2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBooksConsumptions2ActionPerformed
+    private void btn_TVShowsConsumptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TVShowsConsumptionsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_OpenBooksConsumptions2ActionPerformed
+        TVShows tvs = new TVShows();
+        tvs.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_TVShowsConsumptionsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,7 +150,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_OpenBooksConsumptions;
-    private javax.swing.JButton btn_OpenBooksConsumptions1;
-    private javax.swing.JButton btn_OpenBooksConsumptions2;
+    private javax.swing.JButton btn_OpenMoviesConsumptions;
+    private javax.swing.JButton btn_TVShowsConsumptions;
     // End of variables declaration//GEN-END:variables
 }

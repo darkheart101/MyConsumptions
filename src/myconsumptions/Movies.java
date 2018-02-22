@@ -165,9 +165,9 @@ public class Movies extends javax.swing.JFrame {
 
     private void btn_OpenMoviesFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenMoviesFormActionPerformed
         // TODO add your handling code here:
-        AddBookForm adf = new AddBookForm();
-        adf.editRecID = 0;
-        adf.setVisible(true);
+        AddEditMovieForm amvf = new AddEditMovieForm();
+        amvf.editRecID = 0;
+        amvf.setVisible(true);
         this.dispose();
 
     }//GEN-LAST:event_btn_OpenMoviesFormActionPerformed

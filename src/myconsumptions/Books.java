@@ -106,6 +106,14 @@ public class Books extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tbl_books);
+        if (tbl_books.getColumnModel().getColumnCount() > 0) {
+            tbl_books.getColumnModel().getColumn(2).setMinWidth(60);
+            tbl_books.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tbl_books.getColumnModel().getColumn(2).setMaxWidth(60);
+            tbl_books.getColumnModel().getColumn(3).setMinWidth(60);
+            tbl_books.getColumnModel().getColumn(3).setPreferredWidth(60);
+            tbl_books.getColumnModel().getColumn(3).setMaxWidth(60);
+        }
 
         btn_loadBooks.setText("Load");
         btn_loadBooks.addActionListener(new java.awt.event.ActionListener() {
@@ -195,9 +203,9 @@ public class Books extends javax.swing.JFrame {
 
     private void btn_OpenBookFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBookFormActionPerformed
         // TODO add your handling code here:
-        AddBookForm adf = new AddBookForm();
-        adf.editRecID = 0;
-        adf.setVisible(true);
+        AddEditBookForm abf = new AddEditBookForm();
+        abf.editRecID = 0;
+        abf.setVisible(true);
         this.dispose();
                 
     }//GEN-LAST:event_btn_OpenBookFormActionPerformed
@@ -240,7 +248,7 @@ public class Books extends javax.swing.JFrame {
             BookEndingDate = rs.getString(4);
             
             
-            AddBookForm adf = new AddBookForm();
+            AddEditBookForm adf = new AddEditBookForm();
             
             adf.setVisible(true);
             adf.editRecID = bookID;
@@ -312,7 +320,7 @@ public class Books extends javax.swing.JFrame {
         selRow = tbl_books.getSelectedRow();
         bookID = (int)tbl_books.getValueAt(selRow, 0);
         
-        AddBookForm.delete_BookRecord(bookID);
+        AddEditBookForm.delete_BookRecord(bookID);
         this.loadList();
     }//GEN-LAST:event_btn_deleteBookActionPerformed
 
