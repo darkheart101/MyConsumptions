@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -40,7 +42,7 @@ public class AddEditMovieForm extends javax.swing.JFrame {
 
         lbl_MovieTitle = new javax.swing.JLabel();
         txt_movieTitle = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        cal_MovieDate = new com.toedter.calendar.JDateChooser();
         lbl_date = new javax.swing.JLabel();
         btn_saveMovie = new javax.swing.JButton();
         btn_cancelMovie = new javax.swing.JButton();
@@ -49,9 +51,16 @@ public class AddEditMovieForm extends javax.swing.JFrame {
 
         lbl_MovieTitle.setText("Title");
 
+        cal_MovieDate.setDateFormatString("yyyy-MM-dd");
+
         lbl_date.setText("Date");
 
         btn_saveMovie.setText("Save");
+        btn_saveMovie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveMovieActionPerformed(evt);
+            }
+        });
 
         btn_cancelMovie.setText("Cancel");
         btn_cancelMovie.addActionListener(new java.awt.event.ActionListener() {
@@ -76,7 +85,7 @@ public class AddEditMovieForm extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbl_date)
                                 .addGap(18, 18, 18)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cal_MovieDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(15, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -94,7 +103,7 @@ public class AddEditMovieForm extends javax.swing.JFrame {
                     .addComponent(txt_movieTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cal_MovieDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbl_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -113,6 +122,87 @@ public class AddEditMovieForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_cancelMovieActionPerformed
 
+    private void btn_saveMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveMovieActionPerformed
+        // TODO add your handling code here:
+        if(this.editRecID > 0){
+            this.update_MovieRecord();
+        }else{
+            this.insert_new_MovieRecord();
+        }
+    }//GEN-LAST:event_btn_saveMovieActionPerformed
+    
+    // Insert new movie Record    
+    public void insert_new_MovieRecord(){
+        try {
+            String sql ="insert into Movies " 
+                        + "(MovieTitle, Date) "
+                        + "values (?,?)";
+            
+            pst = conn.prepareStatement(sql);
+            pst.setString(1,txt_movieTitle.getText());
+            pst.setString(2,((JTextField)cal_MovieDate.getDateEditor().getUiComponent()).getText());
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data is saved successfully");
+
+       }
+       catch (Exception e){
+           JOptionPane.showMessageDialog(null,e);
+       }
+       finally {
+            try{                
+                pst.close();
+                //clearAll();
+                Movies mv = new Movies();
+                mv.setVisible(true);
+                this.dispose();
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null,e);
+            }            
+        }         
+    }
+    
+    //update movie record
+    public void update_MovieRecord(){
+        if(this.editRecID <= 0){
+            JOptionPane.showMessageDialog(null,"No Valid Record Selected");
+        }
+        int BookID = this.editRecID;        
+        
+        try {
+            String sql ="UPDATE Movies SET " 
+                        + "MovieTitle = ?"
+                        + ",Date = ?"                        
+                        +"WHERE MovieID = ?";
+            
+            pst = conn.prepareStatement(sql);
+            pst.setString(1,txt_movieTitle.getText());
+            pst.setString(2,((JTextField)cal_MovieDate.getDateEditor().getUiComponent()).getText());
+            pst.setString(4,Integer.toString(BookID));
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data is saved successfully");
+
+       }
+       catch (Exception e){
+           JOptionPane.showMessageDialog(null,e);
+       }
+       finally {
+            try{                
+                pst.close();
+                //clearAll();
+                Movies mv = new Movies();
+                mv.setVisible(true);
+                this.dispose();
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null,e);
+            }            
+        }         
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -152,7 +242,7 @@ public class AddEditMovieForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancelMovie;
     private javax.swing.JButton btn_saveMovie;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser cal_MovieDate;
     private javax.swing.JLabel lbl_MovieTitle;
     private javax.swing.JLabel lbl_date;
     private javax.swing.JTextField txt_movieTitle;

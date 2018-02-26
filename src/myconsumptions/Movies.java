@@ -10,6 +10,8 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -30,6 +32,7 @@ public class Movies extends javax.swing.JFrame {
         //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
         setLocation(500, size.height/2 - getHeight()/2);             
         conn = db.java_db();        
+        this.loadList();
     }
 
     /**
@@ -238,6 +241,26 @@ public class Movies extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void loadList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "SELECT MovieID AS 'Movie ID', MovieTitle AS 'Movie Title', Date AS 'Date Watched' FROM Movies ORDER BY date(Date) DESC";
+
+        try{
+
+            pst = conn.prepareStatement(sql);           
+            rs = pst.executeQuery();
+
+            tbl_Movies.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        finally{
+            try{
+                rs.close();
+                pst.close();
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "DB Error!");
+            }
+        }        
     }
 }

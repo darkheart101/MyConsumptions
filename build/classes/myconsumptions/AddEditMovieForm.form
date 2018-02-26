@@ -36,7 +36,7 @@
                           <Group type="102" attributes="0">
                               <Component id="lbl_date" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
+                              <Component id="cal_MovieDate" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="15" max="32767" attributes="0"/>
@@ -62,7 +62,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jDateChooser1" max="32767" attributes="0"/>
+                  <Component id="cal_MovieDate" max="32767" attributes="0"/>
                   <Component id="lbl_date" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="20" max="32767" attributes="0"/>
@@ -83,7 +83,10 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txt_movieTitle">
     </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+    <Component class="com.toedter.calendar.JDateChooser" name="cal_MovieDate">
+      <Properties>
+        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_date">
       <Properties>
@@ -94,6 +97,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_saveMovieActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_cancelMovie">
       <Properties>
