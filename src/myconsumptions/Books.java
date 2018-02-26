@@ -274,10 +274,7 @@ public class Books extends javax.swing.JFrame {
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "DB Error!");
             }
-        }
-        
-        
-        
+        }                     
     }   
     //Load List function
     private void loadList() {                                         

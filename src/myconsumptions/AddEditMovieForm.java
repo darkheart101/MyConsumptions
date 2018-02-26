@@ -9,6 +9,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -85,7 +88,7 @@ public class AddEditMovieForm extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbl_date)
                                 .addGap(18, 18, 18)
-                                .addComponent(cal_MovieDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cal_MovieDate, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(15, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -168,24 +171,25 @@ public class AddEditMovieForm extends javax.swing.JFrame {
         if(this.editRecID <= 0){
             JOptionPane.showMessageDialog(null,"No Valid Record Selected");
         }
-        int BookID = this.editRecID;        
+        int MovieID = this.editRecID;        
         
         try {
             String sql ="UPDATE Movies SET " 
                         + "MovieTitle = ?"
-                        + ",Date = ?"                        
+                        + ",Date = ? "                        
                         +"WHERE MovieID = ?";
             
             pst = conn.prepareStatement(sql);
             pst.setString(1,txt_movieTitle.getText());
             pst.setString(2,((JTextField)cal_MovieDate.getDateEditor().getUiComponent()).getText());
-            pst.setString(4,Integer.toString(BookID));
+            pst.setString(3,Integer.toString(MovieID));
             
             pst.execute();
             JOptionPane.showMessageDialog(null,"Data is saved successfully");
 
        }
        catch (Exception e){
+           
            JOptionPane.showMessageDialog(null,e);
        }
        finally {
@@ -202,7 +206,18 @@ public class AddEditMovieForm extends javax.swing.JFrame {
         }         
         
     }
-    
+    public void loadRecordToForm(Map data) throws ParseException{
+        
+        txt_movieTitle.setText( (String)data.get("MovieTitle") );
+        String dateWatchedInString = (String)data.get("Date");
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        
+        java.util.Date DateWatched = sdf.parse(dateWatchedInString);
+
+
+        cal_MovieDate.setDate(DateWatched);
+    }    
     /**
      * @param args the command line arguments
      */

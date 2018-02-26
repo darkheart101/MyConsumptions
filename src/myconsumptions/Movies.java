@@ -10,6 +10,8 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -174,13 +176,72 @@ public class Movies extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_btn_OpenMoviesFormActionPerformed
+    //Load Record function
+    private void loadRecord(int MovieID ) {    
+        
+        if(MovieID < 0){
+            JOptionPane.showMessageDialog(null, "No movie is Selected!");
+        }
+        
+        String sql = "SELECT MovieID AS 'Movie ID', MovieTitle AS 'Movie Title', Date AS 'Date Watched' FROM Movies WHERE MovieID = ?";
+        
+        String MovieTitle = "";
+        String DateWatched = "";        
+        
+        try{
 
+            pst = conn.prepareStatement(sql);    
+            pst.setInt(1, MovieID);
+            rs = pst.executeQuery();
+            //rs.getString(1);
+            MovieTitle = rs.getString(2);
+            DateWatched = rs.getString(3);            
+            
+            
+            AddEditMovieForm mvform = new AddEditMovieForm();
+            
+            mvform.setVisible(true);
+            mvform.editRecID = MovieID;
+            
+            Map<String, String> mymap = new HashMap<String, String>();
+            mymap.put("MovieID", Integer.toString(MovieID) );
+            mymap.put("MovieTitle", MovieTitle); 
+            mymap.put("Date", DateWatched);            
+            
+            mvform.loadRecordToForm(mymap);
+            
+            this.dispose();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        finally{
+            try{
+                rs.close();
+                pst.close();
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "DB Error!");
+            }
+        }
+        
+        
+        
+    }   
     private void btn_deleteMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteMovieActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_deleteMovieActionPerformed
 
     private void btn_editMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editMoviesActionPerformed
         // TODO add your handling code here:
+        int selRow = 0;
+        int MovieID = 0;
+        
+
+        selRow = tbl_Movies.getSelectedRow();
+        MovieID = (int)tbl_Movies.getValueAt(selRow, 0);
+        
+        this.loadRecord(MovieID);        
     }//GEN-LAST:event_btn_editMoviesActionPerformed
 
     private void btn_loadMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadMoviesActionPerformed

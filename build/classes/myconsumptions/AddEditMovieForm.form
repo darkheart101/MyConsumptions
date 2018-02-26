@@ -36,7 +36,7 @@
                           <Group type="102" attributes="0">
                               <Component id="lbl_date" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cal_MovieDate" min="-2" max="-2" attributes="0"/>
+                              <Component id="cal_MovieDate" min="-2" pref="193" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="15" max="32767" attributes="0"/>
