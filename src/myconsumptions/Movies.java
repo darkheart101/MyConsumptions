@@ -230,8 +230,17 @@ public class Movies extends javax.swing.JFrame {
     }   
     private void btn_deleteMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteMovieActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_deleteMovieActionPerformed
+        int selRow = 0;
+        int RecID = 0;
+        
 
+        selRow = tbl_Movies.getSelectedRow();
+        RecID = (int)tbl_Movies.getValueAt(selRow, 0);
+        
+        AddEditMovieForm.delete_MovieRecord(RecID);
+        this.loadList();        
+    }//GEN-LAST:event_btn_deleteMovieActionPerformed
+    
     private void btn_editMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editMoviesActionPerformed
         // TODO add your handling code here:
         int selRow = 0;

@@ -6,9 +6,11 @@
 package myconsumptions;
 
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -165,7 +167,39 @@ public class AddEditMovieForm extends javax.swing.JFrame {
             }            
         }         
     }
-    
+    // Delete Function
+    public static void delete_MovieRecord(int RecID){
+        if(RecID <=0){
+            JOptionPane.showMessageDialog(null,"No Valid Record Selected");
+        }
+        int MovieID = RecID;
+        
+        Connection conn = db.java_db();
+                
+        try {
+            String sql ="DELETE FROM Movies WHERE MovieID = ?";
+            
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1,Integer.toString(MovieID));
+                pst.execute();
+                JOptionPane.showMessageDialog(null,"Data deleted successfully");
+            }
+
+       }
+       catch (SQLException | HeadlessException e){
+          
+           JOptionPane.showMessageDialog(null,e);
+       }
+       finally {
+            try{                
+               
+                
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null,e);
+            }            
+        }
+    }
     //update movie record
     public void update_MovieRecord(){
         if(this.editRecID <= 0){
