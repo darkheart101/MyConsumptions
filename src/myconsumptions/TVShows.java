@@ -10,6 +10,10 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -63,6 +67,11 @@ public class TVShows extends javax.swing.JFrame {
         });
 
         btn_editTVShow.setText("Edit");
+        btn_editTVShow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editTVShowActionPerformed(evt);
+            }
+        });
 
         btn_deleteTVShow.setText("Delete");
 
@@ -174,6 +183,71 @@ public class TVShows extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_AddTVShowActionPerformed
 
+    private void btn_editTVShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editTVShowActionPerformed
+        // TODO add your handling code here:
+        int selRow = 0;
+        int tvshowID = 0;
+        
+
+        selRow = tbl_TVShowsList.getSelectedRow();
+        tvshowID = (int)tbl_TVShowsList.getValueAt(selRow, 0);
+        
+        this.loadRecord(tvshowID);
+    }//GEN-LAST:event_btn_editTVShowActionPerformed
+    //Load Record function
+    private void loadRecord(int tvshowID ) {    
+        
+        if(tvshowID < 0){
+            JOptionPane.showMessageDialog(null, "No TV Show is Selected!");
+        }
+        
+        String sql = "SELECT TVShowID AS 'TV Show ID', TVShowTitle AS 'TVShow Title', TVShowDateStart AS 'Date Started', TVShowDateEnd AS 'Date Ended' FROM TVShows WHERE TVshowID = ?";
+        
+        String TVShowTitle = "";
+        String TVShowStartingDate = "";
+        String TVShowEndingDate = "";
+        
+        try{
+
+            pst = conn.prepareStatement(sql);    
+            pst.setInt(1, tvshowID);
+            rs = pst.executeQuery();
+            //rs.getString(1);
+            TVShowTitle = rs.getString(2);
+            TVShowStartingDate = rs.getString(3);
+            TVShowEndingDate = rs.getString(4);
+            
+            
+            AddEditTVShowForm aetvf = new AddEditTVShowForm();
+            
+            aetvf.setVisible(true);
+            aetvf.editRecID = tvshowID;
+            
+            Map<String, String> mymap = new HashMap<String, String>();
+            mymap.put("TVShowID", Integer.toString(tvshowID) );
+            mymap.put("TVShowTitle", TVShowTitle); 
+            mymap.put("TVShowStartingDate", TVShowStartingDate);
+            mymap.put("TVShowEndingDate", TVShowEndingDate);
+            
+            aetvf.loadRecordToForm(mymap);
+            
+            this.dispose();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        finally{
+            try{
+                rs.close();
+                pst.close();
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "DB Error!");
+            }
+        }                     
+    }  
+    
+    
     /**
      * @param args the command line arguments
      */

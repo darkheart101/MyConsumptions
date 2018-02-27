@@ -305,6 +305,7 @@ public class AddEditBookForm extends javax.swing.JFrame {
         }         
     }
     
+    //Load Record to Form
     public void loadRecordToForm(Map data) throws ParseException{
         
         txt_bookTitle.setText( (String)data.get("BookTitle") );

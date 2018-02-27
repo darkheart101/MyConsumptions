@@ -9,6 +9,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -215,7 +218,23 @@ public class AddEditTVShowForm extends javax.swing.JFrame {
             }            
         }         
     }    
-    
+    //Load Record to Form
+    public void loadRecordToForm(Map data) throws ParseException{
+        
+        txt_TVShowTitle.setText( (String)data.get("TVShowTitle") );
+        String dateStartInString = (String)data.get("TVShowStartingDate");
+        
+        String dateEndInString = (String)data.get("TVShowEndingDate");
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        
+        java.util.Date TVShowStartingDate = sdf.parse(dateStartInString);
+        java.util.Date TVShowEndingDate = sdf.parse(dateEndInString);
+
+
+        cal_dateTVShowStarted.setDate(TVShowStartingDate);
+        cal_dateTVShowEnded.setDate(TVShowEndingDate);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CancelTVShow;
     private javax.swing.JButton btn_saveTVShow;
