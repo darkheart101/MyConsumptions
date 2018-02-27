@@ -138,7 +138,7 @@ public class AddEditTVShowForm extends javax.swing.JFrame {
     private void btn_saveTVShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveTVShowActionPerformed
         // TODO add your handling code here:
         if(this.editRecID > 0){
-            //this.update_BookRecord();
+            this.update_TVShowRecord();
         }else{
             this.insert_new_TVShowRecord();
         }
@@ -235,6 +235,48 @@ public class AddEditTVShowForm extends javax.swing.JFrame {
         cal_dateTVShowStarted.setDate(TVShowStartingDate);
         cal_dateTVShowEnded.setDate(TVShowEndingDate);
     }
+    
+    //update book record
+    public void update_TVShowRecord(){
+        if(this.editRecID <= 0){
+            JOptionPane.showMessageDialog(null,"No Valid Record Selected");
+        }
+        int TVShowID = this.editRecID;        
+        
+        try {
+            String sql ="UPDATE TVShows SET " 
+                        + "TVShowTitle = ?"
+                        + ",TVShowDateStart = ?"
+                        + ",TVShowDateEnd = ?"
+                        +"WHERE TVShowID = ?";
+            
+            pst = conn.prepareStatement(sql);
+            pst.setString(1,txt_TVShowTitle.getText());
+            pst.setString(2,((JTextField)cal_dateTVShowStarted.getDateEditor().getUiComponent()).getText());
+            pst.setString(3,((JTextField)cal_dateTVShowEnded.getDateEditor().getUiComponent()).getText() );
+            pst.setString(4,Integer.toString(TVShowID));
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Data is saved successfully");
+
+       }
+       catch (Exception e){
+           JOptionPane.showMessageDialog(null,e);
+       }
+       finally {
+            try{                
+                pst.close();
+                //clearAll();
+                TVShows tvs = new TVShows();
+                tvs.setVisible(true);
+                this.dispose();
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null,e);
+            }            
+        }         
+        
+    }    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CancelTVShow;
     private javax.swing.JButton btn_saveTVShow;
