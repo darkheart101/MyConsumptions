@@ -10,6 +10,8 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -29,7 +31,8 @@ public class TVShows extends javax.swing.JFrame {
         Dimension size  = toolkit.getScreenSize();
         //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
         setLocation(500, size.height/2 - getHeight()/2);             
-        conn = db.java_db();          
+        conn = db.java_db();      
+        this.loadList();
     }
 
     /**
@@ -45,7 +48,7 @@ public class TVShows extends javax.swing.JFrame {
         btn_editTVShow = new javax.swing.JButton();
         btn_deleteTVShow = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_TVShowsList = new javax.swing.JTable();
         btn_LoadTVShowList = new javax.swing.JButton();
         btn_OKTVShows = new javax.swing.JButton();
 
@@ -53,12 +56,17 @@ public class TVShows extends javax.swing.JFrame {
         setTitle("TV Shows Consumptions");
 
         btn_AddTVShow.setText("Add");
+        btn_AddTVShow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AddTVShowActionPerformed(evt);
+            }
+        });
 
         btn_editTVShow.setText("Edit");
 
         btn_deleteTVShow.setText("Delete");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_TVShowsList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -85,9 +93,14 @@ public class TVShows extends javax.swing.JFrame {
                 "ID", "Title", "Date Started", "Date Ended"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_TVShowsList);
 
         btn_LoadTVShowList.setText("Load");
+        btn_LoadTVShowList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_LoadTVShowListActionPerformed(evt);
+            }
+        });
 
         btn_OKTVShows.setText("OK");
         btn_OKTVShows.addActionListener(new java.awt.event.ActionListener() {
@@ -149,6 +162,18 @@ public class TVShows extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_OKTVShowsActionPerformed
 
+    private void btn_LoadTVShowListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LoadTVShowListActionPerformed
+        // TODO add your handling code here:
+        this.loadList();
+    }//GEN-LAST:event_btn_LoadTVShowListActionPerformed
+
+    private void btn_AddTVShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddTVShowActionPerformed
+        // TODO add your handling code here:
+        AddEditTVShowForm aetvform = new AddEditTVShowForm();
+        aetvform.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_AddTVShowActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -183,6 +208,30 @@ public class TVShows extends javax.swing.JFrame {
             }
         });
     }
+    //Load List function
+    private void loadList() {                                         
+        String sql = "SELECT TVShowID AS 'TV Show ID', TVShowTitle AS 'TV Show Title', TVShowDateStart AS 'Date Started', TVShowDateEnd AS 'Date Ended' FROM TVShows ORDER BY date(TVShowDateStart) DESC";
+
+        try{
+
+            pst = conn.prepareStatement(sql);           
+            rs = pst.executeQuery();
+
+            tbl_TVShowsList.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        finally{
+            try{
+                rs.close();
+                pst.close();
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "DB Error!");
+            }
+        }
+    }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_AddTVShow;
@@ -191,6 +240,6 @@ public class TVShows extends javax.swing.JFrame {
     private javax.swing.JButton btn_deleteTVShow;
     private javax.swing.JButton btn_editTVShow;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbl_TVShowsList;
     // End of variables declaration//GEN-END:variables
 }
