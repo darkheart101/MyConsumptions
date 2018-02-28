@@ -6,9 +6,11 @@
 package myconsumptions;
 
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -235,6 +237,37 @@ public class AddEditTVShowForm extends javax.swing.JFrame {
         cal_dateTVShowStarted.setDate(TVShowStartingDate);
         cal_dateTVShowEnded.setDate(TVShowEndingDate);
     }
+    public static void delete_TVShowRecord(int tvshowID){
+        if(tvshowID <=0){
+            JOptionPane.showMessageDialog(null,"No Valid Record Selected");
+        }
+        int TVShowID = tvshowID;
+        Connection conn = db.java_db();
+                
+        try {
+            String sql ="DELETE FROM TVShows WHERE TVShowID = ?";
+            
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1,Integer.toString(TVShowID));
+                pst.execute();
+                JOptionPane.showMessageDialog(null,"Data deleted successfully");
+            }
+
+       }
+       catch (SQLException | HeadlessException e){
+          
+           JOptionPane.showMessageDialog(null,e);
+       }
+       finally {
+            try{                
+               
+                
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null,e);
+            }            
+        }
+    }   
     
     //update book record
     public void update_TVShowRecord(){

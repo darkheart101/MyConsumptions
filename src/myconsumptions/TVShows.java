@@ -74,6 +74,11 @@ public class TVShows extends javax.swing.JFrame {
         });
 
         btn_deleteTVShow.setText("Delete");
+        btn_deleteTVShow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteTVShowActionPerformed(evt);
+            }
+        });
 
         tbl_TVShowsList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -194,6 +199,19 @@ public class TVShows extends javax.swing.JFrame {
         
         this.loadRecord(tvshowID);
     }//GEN-LAST:event_btn_editTVShowActionPerformed
+
+    private void btn_deleteTVShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteTVShowActionPerformed
+        // TODO add your handling code here:
+        int selRow = 0;
+        int tvshowID = 0;
+        
+
+        selRow = tbl_TVShowsList.getSelectedRow();
+        tvshowID = (int)tbl_TVShowsList.getValueAt(selRow, 0);
+        
+        AddEditTVShowForm.delete_TVShowRecord(tvshowID);
+        this.loadList();        
+    }//GEN-LAST:event_btn_deleteTVShowActionPerformed
     //Load Record function
     private void loadRecord(int tvshowID ) {    
         
