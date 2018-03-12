@@ -37,6 +37,7 @@ public class Books extends javax.swing.JFrame {
         //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
         setLocation(500, size.height/2 - getHeight()/2);             
         conn = db.java_db();
+        this.fill_combo_with_Years();
 
 //        
 //        tbl_books.getColumnModel().getColumn(0).setPreferredWidth(10);                
@@ -66,6 +67,7 @@ public class Books extends javax.swing.JFrame {
         btn_OpenBookForm = new javax.swing.JButton();
         btn_editBook = new javax.swing.JButton();
         btn_deleteBook = new javax.swing.JButton();
+        cb_bookYear = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Books");
@@ -150,6 +152,12 @@ public class Books extends javax.swing.JFrame {
             }
         });
 
+        cb_bookYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_bookYearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,28 +170,31 @@ public class Books extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btn_loadBooks)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_Ok)
-                                .addGap(16, 16, 16))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btn_OpenBookForm)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_editBook)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_deleteBook)
-                                .addGap(12, 12, 12))))))
+                        .addComponent(btn_loadBooks)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_Ok)
+                        .addGap(16, 16, 16))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(cb_bookYear, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_OpenBookForm)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_editBook)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_deleteBook)
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(28, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_OpenBookForm)
-                    .addComponent(btn_editBook)
-                    .addComponent(btn_deleteBook))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_OpenBookForm)
+                        .addComponent(btn_editBook)
+                        .addComponent(btn_deleteBook))
+                    .addComponent(cb_bookYear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -300,6 +311,38 @@ public class Books extends javax.swing.JFrame {
             }
         }
     }
+
+    //Load Years function
+    private void fill_combo_with_Years() {                                         
+        String sql =    "SELECT " +
+                        "   DISTINCT strftime('%Y',BookStartingDate) as Year " +
+                        "FROM Books " +
+                        "ORDER BY BookStartingDate DESC";
+
+        try{
+
+            pst = conn.prepareStatement(sql);           
+            rs = pst.executeQuery();
+            
+            while(rs.next()){
+                String Year = rs.getString("Year");
+                cb_bookYear.addItem(Year);
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        finally{
+            try{
+                rs.close();
+                pst.close();
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "DB Error!");
+            }
+        }
+    }
+
     
     private void btn_OkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OkActionPerformed
         // TODO add your handling code here:
@@ -320,6 +363,11 @@ public class Books extends javax.swing.JFrame {
         AddEditBookForm.delete_BookRecord(bookID);
         this.loadList();
     }//GEN-LAST:event_btn_deleteBookActionPerformed
+
+    private void cb_bookYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_bookYearActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_cb_bookYearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -362,6 +410,7 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JButton btn_deleteBook;
     private javax.swing.JButton btn_editBook;
     private javax.swing.JButton btn_loadBooks;
+    private javax.swing.JComboBox<String> cb_bookYear;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbl_books;
     // End of variables declaration//GEN-END:variables
