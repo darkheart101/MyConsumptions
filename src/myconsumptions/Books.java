@@ -37,6 +37,7 @@ public class Books extends javax.swing.JFrame {
         //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
         setLocation(500, size.height/2 - getHeight()/2);             
         conn = db.java_db();
+        //this.loadList();
         this.fill_combo_with_Years();
 
 //        
@@ -47,7 +48,8 @@ public class Books extends javax.swing.JFrame {
 //        tbl_books.getColumnModel().getColumn(3).setPreferredWidth(10);
 //
         
-        this.loadList();      
+        //this.loadList();
+        
         
     }
 
@@ -60,17 +62,24 @@ public class Books extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn_loadBooks = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_books = new javax.swing.JTable();
-        btn_loadBooks = new javax.swing.JButton();
+        cb_bookYear = new javax.swing.JComboBox<>();
         btn_Ok = new javax.swing.JButton();
         btn_OpenBookForm = new javax.swing.JButton();
         btn_editBook = new javax.swing.JButton();
         btn_deleteBook = new javax.swing.JButton();
-        cb_bookYear = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Books");
+
+        btn_loadBooks.setText("Load");
+        btn_loadBooks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loadBooksActionPerformed(evt);
+            }
+        });
 
         tbl_books.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,10 +126,9 @@ public class Books extends javax.swing.JFrame {
             tbl_books.getColumnModel().getColumn(3).setMaxWidth(60);
         }
 
-        btn_loadBooks.setText("Load");
-        btn_loadBooks.addActionListener(new java.awt.event.ActionListener() {
+        cb_bookYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_loadBooksActionPerformed(evt);
+                cb_bookYearActionPerformed(evt);
             }
         });
 
@@ -149,12 +157,6 @@ public class Books extends javax.swing.JFrame {
         btn_deleteBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_deleteBookActionPerformed(evt);
-            }
-        });
-
-        cb_bookYear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_bookYearActionPerformed(evt);
             }
         });
 
@@ -314,6 +316,7 @@ public class Books extends javax.swing.JFrame {
 
     //Load Years function
     private void fill_combo_with_Years() {                                         
+        cb_bookYear.removeAllItems();
         String sql =    "SELECT " +
                         "   DISTINCT strftime('%Y',BookStartingDate) as Year " +
                         "FROM Books " +
@@ -366,6 +369,12 @@ public class Books extends javax.swing.JFrame {
 
     private void cb_bookYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_bookYearActionPerformed
         // TODO add your handling code here:
+        //this.loadList();
+        System.out.println(evt);
+        this.loadList();
+        this.fill_combo_with_Years();
+        
+        
 
     }//GEN-LAST:event_cb_bookYearActionPerformed
 
