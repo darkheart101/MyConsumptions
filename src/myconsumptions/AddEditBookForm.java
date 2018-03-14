@@ -239,9 +239,9 @@ public class AddEditBookForm extends javax.swing.JFrame {
         
         try {
             String sql ="UPDATE Books SET " 
-                        + "BookTitle = ?"
-                        + ",BookStartingDate = ?"
-                        + ",BookEndingDate = ?"
+                        + "BookTitle = ? "
+                        + ",BookStartingDate = ? "
+                        + ",BookEndingDate = ? "
                         +"WHERE BookID = ?";
             
             pst = conn.prepareStatement(sql);
@@ -252,6 +252,8 @@ public class AddEditBookForm extends javax.swing.JFrame {
             
             pst.execute();
             JOptionPane.showMessageDialog(null,"Data is saved successfully");
+                   
+            pst.close();
 
        }
        catch (Exception e){

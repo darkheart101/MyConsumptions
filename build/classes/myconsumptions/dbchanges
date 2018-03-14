@@ -1,0 +1,35 @@
+
+CREATE TABLE Books (
+    BookID           INTEGER PRIMARY KEY AUTOINCREMENT
+                             UNIQUE,
+    BookTitle        VARCHAR,
+    BookStartingDate TEXT,
+    BookEndingDate   TEXT
+);
+
+
+
+CREATE TABLE Movies (
+    MovieID    INTEGER PRIMARY KEY AUTOINCREMENT
+                       UNIQUE
+                       NOT NULL,
+    MovieTitle VARCHAR,
+    Date       TEXT
+);
+
+
+CREATE TABLE TVShows (
+    TVShowID        INTEGER PRIMARY KEY AUTOINCREMENT
+                            NOT NULL,
+    TVShowTitle     VARCHAR,
+    TVShowDateStart TEXT,
+    TVShowDateEnd   TEXT
+);
+
+
+CREATE TABLE Users (
+    UserID   INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username VARCHAR,
+    Password VARCHAR
+);
+

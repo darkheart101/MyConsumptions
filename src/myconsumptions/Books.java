@@ -211,7 +211,8 @@ public class Books extends javax.swing.JFrame {
 
     private void btn_loadBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadBooksActionPerformed
         // TODO add your handling code here:
-        this.loadList();       
+        String selectedlYear = cb_bookYear.getSelectedItem().toString();
+        this.loadList(selectedlYear);       
     }//GEN-LAST:event_btn_loadBooksActionPerformed
 
     private void btn_OpenBookFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBookFormActionPerformed
@@ -273,6 +274,8 @@ public class Books extends javax.swing.JFrame {
             mymap.put("BookEndingDate", BookEndingDate);
             
             adf.loadRecordToForm(mymap);
+            rs.close();
+            pst.close();            
             
             this.dispose();
             
@@ -290,16 +293,25 @@ public class Books extends javax.swing.JFrame {
         }                     
     }   
     //Load List function
-    private void loadList() {                                         
-        String sql = "SELECT BookID AS 'Book ID', BookTitle AS 'Book Title', BookStartingDate AS 'Date Started', BookEndingDate AS 'Date Ended' FROM Books ORDER BY date(BookStartingDate) DESC";
+    private void loadList(String Year) {                                         
+        String sql = "SELECT BookID AS 'Book ID'"
+                    + ", BookTitle AS 'Book Title'"
+                    + ", BookStartingDate AS 'Date Started'"
+                    + ", BookEndingDate AS 'Date Ended' "
+                    + "FROM Books "
+                    + "WHERE strftime('%Y',BookStartingDate) = ?"
+                    + "ORDER BY date(BookStartingDate) DESC";
 
         try{
 
-            pst = conn.prepareStatement(sql);           
+            pst = conn.prepareStatement(sql);        
+            pst.setString(1,Year);
             rs = pst.executeQuery();
 
             tbl_books.setModel(DbUtils.resultSetToTableModel(rs));
-            
+                        
+            rs.close();
+            pst.close();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -324,7 +336,7 @@ public class Books extends javax.swing.JFrame {
 
         try{
 
-            pst = conn.prepareStatement(sql);           
+            pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             
             while(rs.next()){
@@ -364,15 +376,21 @@ public class Books extends javax.swing.JFrame {
         bookID = (int)tbl_books.getValueAt(selRow, 0);
         
         AddEditBookForm.delete_BookRecord(bookID);
-        this.loadList();
+        
+        String selectedlYear = cb_bookYear.getSelectedItem().toString();
+        this.loadList(selectedlYear);
     }//GEN-LAST:event_btn_deleteBookActionPerformed
 
     private void cb_bookYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_bookYearActionPerformed
         // TODO add your handling code here:
         //this.loadList();
-        System.out.println(evt);
-        this.loadList();
+        //System.out.println(evt);
+        //YourType varName = (YourType)comboBox.getSelectedItem();`
+        String selectedlYear = cb_bookYear.getSelectedItem().toString();
+        
+        this.loadList(selectedlYear);
         this.fill_combo_with_Years();
+        cb_bookYear.setSelectedItem(selectedlYear);
         
         
 
