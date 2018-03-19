@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -23,6 +25,7 @@ public class Movies extends javax.swing.JFrame {
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    int col[] = {70,285,100};
     /**
      * Creates new form Movies
      */
@@ -35,8 +38,21 @@ public class Movies extends javax.swing.JFrame {
         setLocation(500, size.height/2 - getHeight()/2);             
         conn = db.java_db();        
         this.loadList();
+        
+        // set Jtable column width
+        tbl_Movies.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.setColumnWidth(col);
     }
 
+    
+    // setting column width for jtable
+    private void setColumnWidth(int[] width){
+        int x =  tbl_Movies.getColumnCount()-1;
+        for(int i=0; i<=x; i++){
+            TableColumn column = tbl_Movies.getColumnModel().getColumn(i);
+            column.setPreferredWidth(width[i]);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
