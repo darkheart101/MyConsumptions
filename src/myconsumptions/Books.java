@@ -26,6 +26,7 @@ public class Books extends javax.swing.JFrame {
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    int col[] = {60,200,95,95};
     /**
      * Creates new form Books
      */
@@ -38,19 +39,20 @@ public class Books extends javax.swing.JFrame {
         setLocation(500, size.height/2 - getHeight()/2);             
         conn = db.java_db();
         this.loadList();
-        //this.fill_combo_with_Years();
-
-//        
-//        tbl_books.getColumnModel().getColumn(0).setPreferredWidth(10);                
-//        tbl_books.getColumnModel().getColumn(1).setWidth(10);
-//        tbl_books.getColumnModel().getColumn(1).setPreferredWidth(10);
-//        tbl_books.getColumnModel().getColumn(2).setPreferredWidth(10);
-//        tbl_books.getColumnModel().getColumn(3).setPreferredWidth(10);
-//
         
-        //this.loadList();
+        // set Jtable column width
+        tbl_books.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.setColumnWidth(col);
         
-        
+    }
+    
+    // setting column width for jtable
+    private void setColumnWidth(int[] width){
+        int x = tbl_books.getColumnCount()-1;
+        for(int i=0; i<=x; i++){
+            TableColumn column = tbl_books.getColumnModel().getColumn(i);
+            column.setPreferredWidth(width[i]);
+        }
     }
 
     /**
