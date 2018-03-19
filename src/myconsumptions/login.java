@@ -154,6 +154,8 @@ public class login extends javax.swing.JFrame {
                 //JOptionPane.showMessageDialog(null, "Success");
                 MainMenu mm = new MainMenu();
                 mm.setVisible(true);
+                rs.close();
+                pst.close();                
                 this.dispose();
             }else{
                 JOptionPane.showMessageDialog(null, "Login Failed");

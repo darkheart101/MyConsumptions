@@ -37,8 +37,8 @@ public class Books extends javax.swing.JFrame {
         //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
         setLocation(500, size.height/2 - getHeight()/2);             
         conn = db.java_db();
-        //this.loadList();
-        this.fill_combo_with_Years();
+        this.loadList();
+        //this.fill_combo_with_Years();
 
 //        
 //        tbl_books.getColumnModel().getColumn(0).setPreferredWidth(10);                
@@ -65,7 +65,6 @@ public class Books extends javax.swing.JFrame {
         btn_loadBooks = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_books = new javax.swing.JTable();
-        cb_bookYear = new javax.swing.JComboBox<>();
         btn_Ok = new javax.swing.JButton();
         btn_OpenBookForm = new javax.swing.JButton();
         btn_editBook = new javax.swing.JButton();
@@ -126,12 +125,6 @@ public class Books extends javax.swing.JFrame {
             tbl_books.getColumnModel().getColumn(3).setMaxWidth(60);
         }
 
-        cb_bookYear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_bookYearActionPerformed(evt);
-            }
-        });
-
         btn_Ok.setText("OK");
         btn_Ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,9 +170,7 @@ public class Books extends javax.swing.JFrame {
                         .addComponent(btn_Ok)
                         .addGap(16, 16, 16))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(cb_bookYear, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(14, 266, Short.MAX_VALUE)
                 .addComponent(btn_OpenBookForm)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_editBook)
@@ -191,12 +182,10 @@ public class Books extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(28, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_OpenBookForm)
-                        .addComponent(btn_editBook)
-                        .addComponent(btn_deleteBook))
-                    .addComponent(cb_bookYear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_OpenBookForm)
+                    .addComponent(btn_editBook)
+                    .addComponent(btn_deleteBook))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -211,8 +200,8 @@ public class Books extends javax.swing.JFrame {
 
     private void btn_loadBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadBooksActionPerformed
         // TODO add your handling code here:
-        String selectedlYear = cb_bookYear.getSelectedItem().toString();
-        this.loadList(selectedlYear);       
+        //String selectedlYear = cb_bookYear.getSelectedItem().toString();
+        this.loadList();       
     }//GEN-LAST:event_btn_loadBooksActionPerformed
 
     private void btn_OpenBookFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBookFormActionPerformed
@@ -293,57 +282,25 @@ public class Books extends javax.swing.JFrame {
         }                     
     }   
     //Load List function
-    private void loadList(String Year) {                                         
+    private void loadList() {                                         
         String sql = "SELECT BookID AS 'Book ID'"
                     + ", BookTitle AS 'Book Title'"
                     + ", BookStartingDate AS 'Date Started'"
                     + ", BookEndingDate AS 'Date Ended' "
                     + "FROM Books "
-                    + "WHERE strftime('%Y',BookStartingDate) = ?"
+                    //+ "WHERE strftime('%Y',BookStartingDate) = ?"
                     + "ORDER BY date(BookStartingDate) DESC";
 
         try{
 
             pst = conn.prepareStatement(sql);        
-            pst.setString(1,Year);
+            //pst.setString(1,Year);
             rs = pst.executeQuery();
 
             tbl_books.setModel(DbUtils.resultSetToTableModel(rs));
                         
             rs.close();
             pst.close();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-        finally{
-            try{
-                rs.close();
-                pst.close();
-                
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "DB Error!");
-            }
-        }
-    }
-
-    //Load Years function
-    private void fill_combo_with_Years() {                                         
-        cb_bookYear.removeAllItems();
-        String sql =    "SELECT " +
-                        "   DISTINCT strftime('%Y',BookStartingDate) as Year " +
-                        "FROM Books " +
-                        "ORDER BY BookStartingDate DESC";
-
-        try{
-
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            
-            while(rs.next()){
-                String Year = rs.getString("Year");
-                cb_bookYear.addItem(Year);
-            }
-            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -377,24 +334,9 @@ public class Books extends javax.swing.JFrame {
         
         AddEditBookForm.delete_BookRecord(bookID);
         
-        String selectedlYear = cb_bookYear.getSelectedItem().toString();
-        this.loadList(selectedlYear);
+        //String selectedlYear = cb_bookYear.getSelectedItem().toString();
+        this.loadList();
     }//GEN-LAST:event_btn_deleteBookActionPerformed
-
-    private void cb_bookYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_bookYearActionPerformed
-        // TODO add your handling code here:
-        //this.loadList();
-        //System.out.println(evt);
-        //YourType varName = (YourType)comboBox.getSelectedItem();`
-        String selectedlYear = cb_bookYear.getSelectedItem().toString();
-        
-        this.loadList(selectedlYear);
-        this.fill_combo_with_Years();
-        cb_bookYear.setSelectedItem(selectedlYear);
-        
-        
-
-    }//GEN-LAST:event_cb_bookYearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -437,7 +379,6 @@ public class Books extends javax.swing.JFrame {
     private javax.swing.JButton btn_deleteBook;
     private javax.swing.JButton btn_editBook;
     private javax.swing.JButton btn_loadBooks;
-    private javax.swing.JComboBox<String> cb_bookYear;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tbl_books;
     // End of variables declaration//GEN-END:variables
