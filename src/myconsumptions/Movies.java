@@ -272,6 +272,9 @@ public class Movies extends javax.swing.JFrame {
     private void btn_loadMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadMoviesActionPerformed
         // TODO add your handling code here:
         this.loadList();
+        // set Jtable column width
+        tbl_Movies.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.setColumnWidth(col);        
     }//GEN-LAST:event_btn_loadMoviesActionPerformed
 
     private void btn_OkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OkActionPerformed

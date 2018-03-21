@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/MyFiles/Workspace/Projects/MyConsumptions/src/myconsumptions/dbchanges</file>
             <file>file:/MyFiles/Workspace/Projects/MyConsumptions/src/myconsumptions/Books.java</file>
-            <file>file:/MyFiles/Workspace/Projects/MyConsumptions/src/myconsumptions/db.java</file>
-            <file>file:/MyFiles/Workspace/Projects/MyConsumptions/src/myconsumptions/AddEditBookForm.java</file>
+            <file>file:/MyFiles/Workspace/Projects/MyConsumptions/src/myconsumptions/Movies.java</file>
+            <file>file:/MyFiles/Workspace/Projects/MyConsumptions/src/myconsumptions/TVShows.java</file>
         </group>
     </open-files>
 </project-private>

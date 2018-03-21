@@ -40,7 +40,6 @@ public class Books extends javax.swing.JFrame {
         conn = db.java_db();
         this.loadList();
         
-        // set Jtable column width
         tbl_books.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         this.setColumnWidth(col);
         
@@ -203,7 +202,9 @@ public class Books extends javax.swing.JFrame {
     private void btn_loadBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadBooksActionPerformed
         // TODO add your handling code here:
         //String selectedlYear = cb_bookYear.getSelectedItem().toString();
-        this.loadList();       
+        this.loadList();
+        tbl_books.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.setColumnWidth(col);
     }//GEN-LAST:event_btn_loadBooksActionPerformed
 
     private void btn_OpenBookFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBookFormActionPerformed
@@ -284,7 +285,11 @@ public class Books extends javax.swing.JFrame {
         }                     
     }   
     //Load List function
-    private void loadList() {                                         
+    private void loadList() {  
+        // set Jtable column width
+        tbl_books.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.setColumnWidth(col);
+        
         String sql = "SELECT BookID AS 'Book ID'"
                     + ", BookTitle AS 'Book Title'"
                     + ", BookStartingDate AS 'Date Started'"

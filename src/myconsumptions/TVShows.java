@@ -194,6 +194,9 @@ public class TVShows extends javax.swing.JFrame {
     private void btn_LoadTVShowListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LoadTVShowListActionPerformed
         // TODO add your handling code here:
         this.loadList();
+        // set Jtable column width
+        tbl_TVShowsList.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.setColumnWidth(col);        
     }//GEN-LAST:event_btn_LoadTVShowListActionPerformed
 
     private void btn_AddTVShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddTVShowActionPerformed
