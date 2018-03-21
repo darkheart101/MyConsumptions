@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is the Form were you can see every TV Show
+ * that was watched by the user. Also provides info
+ * about when the user started watching the TV Show
+ * and when ended
  */
 package myconsumptions;
 
@@ -10,8 +11,6 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -21,22 +20,23 @@ import net.proteanit.sql.DbUtils;
 
 /**
  *
- * @author darkheart
+ * @author Thodoris Kouleris
  */
 public class TVShows extends javax.swing.JFrame {
+    
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
     int col[] = {80,195,95,95};
+    
     /**
-     * Creates new form TVShows
+     * Constructor
      */
     public TVShows() {
         initComponents();
         
         Toolkit toolkit = getToolkit();
-        Dimension size  = toolkit.getScreenSize();
-        //setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);      
+        Dimension size  = toolkit.getScreenSize();    
         setLocation(500, size.height/2 - getHeight()/2);             
         conn = db.java_db();      
         this.loadList();
@@ -46,7 +46,10 @@ public class TVShows extends javax.swing.JFrame {
         this.setColumnWidth(col);
     }
     
-    // setting column width for jtable
+    /**
+     * 
+     * Setting column width for jtable
+     */
     private void setColumnWidth(int[] width){
         int x = tbl_TVShowsList.getColumnCount()-1;
         for(int i=0; i<=x; i++){
@@ -184,30 +187,48 @@ public class TVShows extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * Button that goes back to main menu
+     */
     private void btn_OKTVShowsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OKTVShowsActionPerformed
-        // TODO add your handling code here:
+       
         MainMenu mm = new MainMenu();
         mm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_OKTVShowsActionPerformed
 
+    /**
+     * 
+     * Button that loads the list
+     */
     private void btn_LoadTVShowListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LoadTVShowListActionPerformed
-        // TODO add your handling code here:
+        
         this.loadList();
         // set Jtable column width
         tbl_TVShowsList.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         this.setColumnWidth(col);        
     }//GEN-LAST:event_btn_LoadTVShowListActionPerformed
 
+    
+    /**
+     * 
+     * Opens a NewEdit Window in Insert Mode
+     */
     private void btn_AddTVShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddTVShowActionPerformed
-        // TODO add your handling code here:
+                
         AddEditTVShowForm aetvform = new AddEditTVShowForm();
+        aetvform.editRecID = 0;
         aetvform.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_AddTVShowActionPerformed
 
+    /**
+     * 
+     * Opens a Window in Edit Mode
+     */
     private void btn_editTVShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editTVShowActionPerformed
-        // TODO add your handling code here:
+        
         int selRow = 0;
         int tvshowID = 0;
         
@@ -218,6 +239,10 @@ public class TVShows extends javax.swing.JFrame {
         this.loadRecord(tvshowID);
     }//GEN-LAST:event_btn_editTVShowActionPerformed
 
+    /**
+     * 
+     * Deletes the selected record
+     */
     private void btn_deleteTVShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteTVShowActionPerformed
         // TODO add your handling code here:
         int selRow = 0;
@@ -230,7 +255,11 @@ public class TVShows extends javax.swing.JFrame {
         AddEditTVShowForm.delete_TVShowRecord(tvshowID);
         this.loadList();        
     }//GEN-LAST:event_btn_deleteTVShowActionPerformed
-    //Load Record function
+    
+    /**
+     * 
+     * Fetched a record from db
+     */
     private void loadRecord(int tvshowID ) {    
         
         if(tvshowID < 0){
@@ -247,8 +276,7 @@ public class TVShows extends javax.swing.JFrame {
 
             pst = conn.prepareStatement(sql);    
             pst.setInt(1, tvshowID);
-            rs = pst.executeQuery();
-            //rs.getString(1);
+            rs = pst.executeQuery();            
             TVShowTitle = rs.getString(2);
             TVShowStartingDate = rs.getString(3);
             TVShowEndingDate = rs.getString(4);
@@ -283,6 +311,32 @@ public class TVShows extends javax.swing.JFrame {
         }                     
     }  
     
+    /**
+     * Load List function
+     */
+    private void loadList() {                                         
+        String sql = "SELECT TVShowID AS 'TV Show ID', TVShowTitle AS 'TV Show Title', TVShowDateStart AS 'Date Started', TVShowDateEnd AS 'Date Ended' FROM TVShows ORDER BY date(TVShowDateStart) DESC";
+
+        try{
+
+            pst = conn.prepareStatement(sql);           
+            rs = pst.executeQuery();
+
+            tbl_TVShowsList.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        finally{
+            try{
+                rs.close();
+                pst.close();
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "DB Error!");
+            }
+        }
+    }        
     
     /**
      * @param args the command line arguments
@@ -318,31 +372,7 @@ public class TVShows extends javax.swing.JFrame {
             }
         });
     }
-    //Load List function
-    private void loadList() {                                         
-        String sql = "SELECT TVShowID AS 'TV Show ID', TVShowTitle AS 'TV Show Title', TVShowDateStart AS 'Date Started', TVShowDateEnd AS 'Date Ended' FROM TVShows ORDER BY date(TVShowDateStart) DESC";
-
-        try{
-
-            pst = conn.prepareStatement(sql);           
-            rs = pst.executeQuery();
-
-            tbl_TVShowsList.setModel(DbUtils.resultSetToTableModel(rs));
-            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-        finally{
-            try{
-                rs.close();
-                pst.close();
-                
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "DB Error!");
-            }
-        }
-    }    
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_AddTVShow;
     private javax.swing.JButton btn_LoadTVShowList;

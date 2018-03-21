@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is the Form were you can see every book
+ * that was read by the user. Also provides info
+ * about when the reading started and when ended
  */
 package myconsumptions;
 
@@ -15,20 +15,21 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import net.proteanit.sql.DbUtils;
 
 /**
  *
- * @author darkheart
+ * @author Thodoris Kouleris
  */
 public class Books extends javax.swing.JFrame {
+    
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
     int col[] = {60,200,95,95};
+    
     /**
-     * Creates new form Books
+     * Constructor
      */
     public Books() {
         initComponents();
@@ -44,8 +45,10 @@ public class Books extends javax.swing.JFrame {
         this.setColumnWidth(col);
         
     }
-    
-    // setting column width for jtable
+    /**
+     * 
+     * Setting column width for jtable
+     */
     private void setColumnWidth(int[] width){
         int x = tbl_books.getColumnCount()-1;
         for(int i=0; i<=x; i++){
@@ -199,23 +202,33 @@ public class Books extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * Load List button
+     */
     private void btn_loadBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadBooksActionPerformed
-        // TODO add your handling code here:
-        //String selectedlYear = cb_bookYear.getSelectedItem().toString();
+
         this.loadList();
         tbl_books.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         this.setColumnWidth(col);
+        
     }//GEN-LAST:event_btn_loadBooksActionPerformed
-
+    /**
+     * 
+     * Open NewEdit Window in Insert Mode
+     */
     private void btn_OpenBookFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenBookFormActionPerformed
-        // TODO add your handling code here:
+        
         AddEditBookForm abf = new AddEditBookForm();
         abf.editRecID = 0;
         abf.setVisible(true);
         this.dispose();
                 
     }//GEN-LAST:event_btn_OpenBookFormActionPerformed
-
+    /**
+     * 
+     * Open NewEdit Window in Edit Mode
+     */
     private void btn_editBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editBookActionPerformed
         // TODO add your handling code here:
         int selRow = 0;
@@ -229,8 +242,11 @@ public class Books extends javax.swing.JFrame {
         //System.out.println(bookID);
        
     }//GEN-LAST:event_btn_editBookActionPerformed
- 
-    //Load Record function
+    
+    /**
+     * 
+     * Fetches a book record from the DB
+     */   
     private void loadRecord(int bookID ) {    
         
         if(bookID < 0){
@@ -284,8 +300,12 @@ public class Books extends javax.swing.JFrame {
             }
         }                     
     }   
-    //Load List function
+    
+    /**
+     * Load List function 
+     */  
     private void loadList() {  
+        
         // set Jtable column width
         tbl_books.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         this.setColumnWidth(col);
@@ -301,7 +321,6 @@ public class Books extends javax.swing.JFrame {
         try{
 
             pst = conn.prepareStatement(sql);        
-            //pst.setString(1,Year);
             rs = pst.executeQuery();
 
             tbl_books.setModel(DbUtils.resultSetToTableModel(rs));
@@ -322,14 +341,22 @@ public class Books extends javax.swing.JFrame {
         }
     }
 
-    
+    /**
+     * 
+     * OK button - Goes back to the main menu
+     */
     private void btn_OkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OkActionPerformed
-        // TODO add your handling code here:
+
         MainMenu mm = new MainMenu();
         mm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_OkActionPerformed
-
+    
+    
+    /**
+     * 
+     * Deletes a selected record
+     */
     private void btn_deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteBookActionPerformed
         // TODO add your handling code here:
         int selRow = 0;
@@ -341,7 +368,6 @@ public class Books extends javax.swing.JFrame {
         
         AddEditBookForm.delete_BookRecord(bookID);
         
-        //String selectedlYear = cb_bookYear.getSelectedItem().toString();
         this.loadList();
     }//GEN-LAST:event_btn_deleteBookActionPerformed
 

@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This is the Form were you can see every Movie
+ * that was watched by the user. Also provides info
+ * about when the user watched the movie
  */
 package myconsumptions;
 
@@ -19,15 +19,17 @@ import net.proteanit.sql.DbUtils;
 
 /**
  *
- * @author darkheart
+ * @author Thodoris Kouleris
  */
 public class Movies extends javax.swing.JFrame {
+    
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
     int col[] = {70,285,100};
+    
     /**
-     * Creates new form Movies
+     * Constructor
      */
     public Movies() {
         initComponents();
@@ -44,8 +46,9 @@ public class Movies extends javax.swing.JFrame {
         this.setColumnWidth(col);
     }
 
-    
-    // setting column width for jtable
+    /**
+     * Setting column width for jtable
+     */
     private void setColumnWidth(int[] width){
         int x =  tbl_Movies.getColumnCount()-1;
         for(int i=0; i<=x; i++){
@@ -183,7 +186,12 @@ public class Movies extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
 
+    /**
+     * 
+     * Opens a NewEdit Window in Insert Mode
+     */
     private void btn_OpenMoviesFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenMoviesFormActionPerformed
         // TODO add your handling code here:
         AddEditMovieForm amvf = new AddEditMovieForm();
@@ -192,7 +200,11 @@ public class Movies extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_btn_OpenMoviesFormActionPerformed
-    //Load Record function
+    
+    /**
+     * 
+     * Fetches a record from the db
+     */
     private void loadRecord(int MovieID ) {    
         
         if(MovieID < 0){
@@ -209,10 +221,8 @@ public class Movies extends javax.swing.JFrame {
             pst = conn.prepareStatement(sql);    
             pst.setInt(1, MovieID);
             rs = pst.executeQuery();
-            //rs.getString(1);
             MovieTitle = rs.getString(2);
-            DateWatched = rs.getString(3);            
-            
+            DateWatched = rs.getString(3);
             
             AddEditMovieForm mvform = new AddEditMovieForm();
             
@@ -240,25 +250,28 @@ public class Movies extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "DB Error!");
             }
         }
-        
-        
-        
     }   
+    /**
+     * 
+     * Deletes selected record
+     */
     private void btn_deleteMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteMovieActionPerformed
-        // TODO add your handling code here:
+
         int selRow = 0;
         int RecID = 0;
         
-
         selRow = tbl_Movies.getSelectedRow();
         RecID = (int)tbl_Movies.getValueAt(selRow, 0);
         
         AddEditMovieForm.delete_MovieRecord(RecID);
         this.loadList();        
     }//GEN-LAST:event_btn_deleteMovieActionPerformed
-    
+    /**
+     * 
+     * Opens a NewEdit Window in Edit Mode
+     */
     private void btn_editMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editMoviesActionPerformed
-        // TODO add your handling code here:
+        
         int selRow = 0;
         int MovieID = 0;
         
@@ -268,22 +281,56 @@ public class Movies extends javax.swing.JFrame {
         
         this.loadRecord(MovieID);        
     }//GEN-LAST:event_btn_editMoviesActionPerformed
-
+    
+   /**
+    * 
+    * Button that Loads List with Movies
+    */   
     private void btn_loadMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadMoviesActionPerformed
-        // TODO add your handling code here:
+        
         this.loadList();
-        // set Jtable column width
+    
         tbl_Movies.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         this.setColumnWidth(col);        
     }//GEN-LAST:event_btn_loadMoviesActionPerformed
-
+    /**
+     * 
+     * Button that goes back to main menu
+     */
     private void btn_OkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OkActionPerformed
-        // TODO add your handling code here:
+        
         MainMenu mm = new MainMenu();
         mm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_OkActionPerformed
+    
+    /**
+     *  load list function
+     */
+    private void loadList() {
+        
+        String sql = "SELECT MovieID AS 'Movie ID', MovieTitle AS 'Movie Title', Date AS 'Date Watched' FROM Movies ORDER BY date(Date) DESC";
 
+        try{
+
+            pst = conn.prepareStatement(sql);           
+            rs = pst.executeQuery();
+
+            tbl_Movies.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        finally{
+            try{
+                rs.close();
+                pst.close();
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "DB Error!");
+            }
+        }        
+    }    
     /**
      * @param args the command line arguments
      */
@@ -329,27 +376,5 @@ public class Movies extends javax.swing.JFrame {
     private javax.swing.JTable tbl_Movies;
     // End of variables declaration//GEN-END:variables
 
-    private void loadList() {
-        String sql = "SELECT MovieID AS 'Movie ID', MovieTitle AS 'Movie Title', Date AS 'Date Watched' FROM Movies ORDER BY date(Date) DESC";
 
-        try{
-
-            pst = conn.prepareStatement(sql);           
-            rs = pst.executeQuery();
-
-            tbl_Movies.setModel(DbUtils.resultSetToTableModel(rs));
-            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-        finally{
-            try{
-                rs.close();
-                pst.close();
-                
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "DB Error!");
-            }
-        }        
-    }
 }
